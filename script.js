@@ -311,6 +311,11 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Close details panel
+document.getElementById('detailsCloseBtn').addEventListener('click', function() {
+    document.body.classList.remove('card-flipped');
+});
+
 // Add some sample data for demonstration
 function addSampleData() {
     const sampleResponses = [
