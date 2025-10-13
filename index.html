@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardono - Digital Invitation Cards</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>Cardono</h1>
+                <p>Digital Invitation Cards</p>
+            </div>
+        </header>
+
+        <!-- Envelope Container -->
+        <div class="envelope-container" id="envelopeContainer">
+            <div class="envelope" id="envelope">
+                <div class="envelope-front">
+                    <div class="envelope-seal">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="envelope-text">
+                        <h3>You're Invited</h3>
+                        <p>Click to open</p>
+                    </div>
+                </div>
+                <div class="envelope-back"></div>
+            </div>
+            
+            <!-- Invitation Card Container -->
+            <div class="card-container" id="cardContainer">
+                <!-- Flip Button -->
+                <button class="flip-button" id="flipButton" onclick="flipCard()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                
+                <div class="card" id="invitationCard">
+                <!-- Front of Card -->
+                <div class="card-front">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="seal">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h2 class="event-title">You're Invited</h2>
+                            <div class="cardano-logo">
+                                <h3>Cardono</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="event-date">Saturday, December 14, 2024</span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fas fa-clock"></i>
+                                <span class="event-time">7:00 PM - 11:00 PM</span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="event-location">The Grand Ballroom, Downtown Plaza</span>
+                            </div>
+                        </div>
+
+                     </div>
+                </div>
+
+                <!-- Back of Card -->
+                <div class="card-back">
+                    <!-- Design template shown when flipped -->
+                    <div class="design-template" id="designTemplate" aria-label="Designed invitation back">
+                        <div class="design-content">
+                            <div class="design-top">
+                                <div class="together">TOGETHER<br>WITH THEIR FAMILIES</div>
+                                <div class="names">
+                                    <span class="name">Olivia</span>
+                                    <span class="amp">&</span>
+                                    <span class="name">Sebastian</span>
+                                </div>
+                                <div class="invite">INVITE YOU TO<br>CELEBRATE THEIR MARRIAGE</div>
+                            </div>
+                            <div class="design-date">
+                                <div class="date-line">JANUARY 23, 2024</div>
+                                <div class="date-line">AT 4 O'CLOCK</div>
+                            </div>
+                            <div class="design-address">123 ANYWHERE ST., ANY CITY</div>
+                            <div class="design-reception">Reception to Follow</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="rsvp-section">
+                            <h3>RSVP</h3>
+                            <div class="guest-form">
+                                <div class="form-group">
+                                    <label for="guestName">Name *</label>
+                                    <input type="text" id="guestName" placeholder="Enter your name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="guestEmail">Email *</label>
+                                    <input type="email" id="guestEmail" placeholder="Enter your email" required>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="guestCount">Number of guests (including yourself)</label>
+                                    <select id="guestCount">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="specialMessage">Leave a special message for the hosts</label>
+                                    <textarea id="specialMessage" placeholder="Share your excitement, send well wishes, or leave a heartfelt note..."></textarea>
+                                </div>
+
+                                <button type="submit" class="submit-btn">Send RSVP</button>
+                            </div>
+                        </div>
+
+                        <div class="calendar-section">
+                            <h4>Add to Calendar</h4>
+                            <div class="calendar-buttons">
+                                <button class="calendar-btn" data-calendar="google">
+                                    <i class="fab fa-google"></i>
+                                    Google Calendar
+                                </button>
+                                <button class="calendar-btn" data-calendar="outlook">
+                                    <i class="fab fa-microsoft"></i>
+                                    Outlook
+                                </button>
+                                <button class="calendar-btn" data-calendar="ical">
+                                    <i class="fas fa-calendar"></i>
+                                    iCal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Right-side Details Panel -->
+        <aside class="details-panel" id="detailsPanel">
+            <div class="details-header">DETAILS</div>
+            <div class="details-section">
+                <div class="details-subtitle">LOCATION</div>
+                <div class="details-title" id="detailsLocation">The Grand Ballroom</div>
+                <div class="details-address" id="detailsAddress">123 Downtown Plaza, Your City</div>
+                <div class="details-datetime" id="detailsDateTime">Saturday, December 14, 2024 • 7:00 PM</div>
+                <div class="details-actions">
+                    <button class="details-link" id="detailsViewMap"><i class="fas fa-map-marker-alt"></i> View Map</button>
+                    <button class="details-link" id="detailsAddCalendar"><i class="far fa-calendar-plus"></i> Add to calendar</button>
+                </div>
+            </div>
+            <hr class="details-separator" />
+            <a class="details-rsvp" href="#cardContainer">View website & RSVP here</a>
+
+            <button class="send-message" id="sendMessageBtn">SEND MESSAGE</button>
+        </aside>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-content">
+                <i class="fas fa-check-circle"></i>
+                <h3>RSVP Sent Successfully!</h3>
+                <p>Thank you for your response. We'll see you at the event!</p>
+                <button class="close-btn" onclick="closeSuccessMessage()">Close</button>
+            </div>
+        </div>
+
+        <!-- Admin Panel (Hidden by default) -->
+        <div class="admin-panel" id="adminPanel">
+            <h3>Host Dashboard</h3>
+            <div class="admin-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalResponses">0</span>
+                    <span class="stat-label">Total Responses</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="attendingCount">0</span>
+                    <span class="stat-label">Attending</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="notAttendingCount">0</span>
+                    <span class="stat-label">Not Attending</span>
+                </div>
+            </div>
+            
+            <div class="responses-list">
+                <h4>Responses</h4>
+                <div class="responses-container" id="responsesContainer">
+                    <!-- Responses will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle Admin Panel Button -->
+        <button class="admin-toggle" id="adminToggle" onclick="toggleAdminPanel()">
+            <i class="fas fa-cog"></i>
+            Host View
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
