@@ -356,3 +356,12 @@ function addSampleData() {
 
 // Uncomment the line below to add sample data for demonstration
 // addSampleData();
+
+document.getElementById('invitationCard').addEventListener('click', function() {
+    document.getElementById('flipButton').style.display = 'flex';
+});
+
+document.getElementById('envelopeFront').addEventListener('click', function() {
+    document.getElementById('envelopeFront').style.display = 'none'; // Hide first page
+    document.getElementById('cardContainer').style.display = 'block'; // Show card
+});

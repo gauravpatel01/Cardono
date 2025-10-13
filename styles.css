@@ -244,12 +244,12 @@ body::after {
 /* Flip Button */
 .flip-button {
     position: absolute;
-    top: -60px;
-    left: -60px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    top:-5%;
+    left: -600px;
+    width: 130px;
+    height: 80px;
+    background: linear-gradient(135deg, #74a874 0%, #a0c296 100%);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -263,13 +263,12 @@ body::after {
 }
 
 .flip-button:hover {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-    transform: scale(1.1) rotate(180deg);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #80b66a 0%, #7de286 100%);
+    box-shadow: 0 6px 20px rgba(101, 216, 120, 0.4);
 }
 
 .flip-button:active {
-    transform: scale(0.95) rotate(180deg);
+    transform: scale(0.95) rotate();
 }
 
 .flip-button i {
