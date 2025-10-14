@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #B6AE9F;
+    background: url(https://i.pinimg.com/1200x/03/65/e1/0365e1d6f1cb38565da4076fb83717d1.jpg);
     min-height: 100vh;
     color: #333;
     overflow-x: hidden;
@@ -29,43 +29,115 @@ body::after {
     position: relative;
 }
 
+/* Responsive adjustments for overall layout */
+@media (max-width: 1200px) {
+    .container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+
 /* Right-side Details Panel */
 .details-panel {
     position: fixed;
-    top: 0px;
-    right: 0;
+    top: 0;
+    right: -415px; /* Start hidden off-screen */
     width: 415px;
-    height: calc(107vh - 60px);
+    height: 100vh;
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(6px);
     border-left: 1px solid rgba(0,0,0,0.05);
     box-shadow: -2px 0 10px rgba(0,0,0,0.05);
-    padding: 12px 32px 110px; /* Reduced top padding */
+    padding: 32px 32px 110px;
     overflow-y: auto;
     z-index: 500;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s;
+    transition: right 1.1s cubic-bezier(.2,0,.2,1), opacity 1.1s;
     display: block;
 }
 .details-header {
-    color: #4e5b52;
-    letter-spacing: 3px;
-    font-weight: 600;
-    margin-bottom: 18px;
-    margin-top: 0; /* Remove any top margin */
-    padding-top: 0; /* Remove any extra top padding */
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #263533;
+    margin-bottom: 12px;
+    letter-spacing: 1.5px;
 }
-.details-section { background: rgba(255,255,255,0.85); border-radius: 10px; padding: 18px; margin-top: 0; /* Remove any top margin */ }
-.details-subtitle { color: #6c7a70; font-size: 12px; letter-spacing: 2px; margin-bottom: 8px; }
-.details-title { color: #263533; font-weight: 700; margin-bottom: 6px; }
-.details-address, .details-datetime { color: #5b6a60; font-size: 14px; }
-.details-actions { display: flex; gap: 14px; margin-top: 12px; }
-.details-link { background: transparent; border: none; color: #3a6b55; cursor: pointer; font-size: 13px; }
-.details-link i { margin-right: 6px; }
-.details-separator { border: 0; border-top: 1px solid rgba(0,0,0,0.08); margin: 18px 0; }
-.details-rsvp { color: #3a6b55; font-size: 13px; text-decoration: underline; }
-.send-message { display: block; margin: 32px auto 0 auto; /* Top margin, auto left/right centers it */ background: #3a6b55; color: #fff; border: none; border-radius: 6px; padding: 12px 24px; cursor: pointer; font-size: 1.1rem; position: static; /* Remove fixed positioning */ box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s; }
+.details-section { 
+    font-size: large;
+    border-radius: 10px; 
+    padding: 28px;
+    margin-top: 0; /* Remove any top margin */ 
+    }
+.details-subtitle {
+    color: #6c7a70; 
+    font-size: 25px; 
+    letter-spacing: 3px; 
+    margin-bottom: 11px; 
+    text-align: center; 
+    }
+.details-title { 
+    color: #263533; 
+    font-weight: 700; 
+    margin-bottom: 8px; 
+    text-align: center; 
+    font-size: 1.4rem; 
+}
+.details-address { 
+    color: #5b6a60; 
+    font-size: 20px; 
+    text-align: center; 
+    margin-bottom: 15px; 
+}
+.details-actions { 
+    display: flex; 
+    justify-content: center;
+    gap: 30px; 
+    margin-top: 15px; 
+}
+.details-link { 
+    background: transparent; 
+    border: none; 
+    color: #3a6b55; 
+    cursor: pointer; 
+    font-size: 22px; 
+    text-decoration: underline; 
+    padding: 0; }
+.details-link i { 
+    margin-right: 8px; 
+}
+.details-separator { 
+    border: none; 
+    border-top: 1px solid rgba(0,0,0,0.10);
+    margin: 25px 0; }
+.details-rsvp { 
+    color: #3a6b55; 
+    font-size: 16px; 
+    text-decoration: underline; }
+.send-message { 
+    display: block; 
+    margin: 45px auto 0 auto; 
+    background: #6c7a70; 
+    color: #fff; 
+    border: none; 
+    border-radius: 40px; 
+    padding: 15px 30px; 
+    cursor: pointer; 
+    font-size: 1.8rem; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
+    transition: background 0.2s; 
+    text-align: center; 
+    width: 85%; }
+
+.send-message:hover {
+    background: #3a6b55;
+}
 
 .details-close {
     position: absolute;
@@ -84,16 +156,21 @@ body::after {
     color: #c0392b;
 }
 
-@media (max-width: 1024px) {
-    .details-panel { display: none; }
+/* Adjustments for the close button positioning */
+body.card-flipped .details-panel .details-close {
+    top: 25px;
+    right: 25px;
 }
 
-/* Responsive: increase max-height for mobile bottom sheet */
-@media (max-width: 1024px) {
+/* Adjust details panel for larger screens, ensuring it does not overlap crucial content */
+@media (min-width: 1400px) {
     .details-panel {
-        max-height: 600px; /* Increased from 400px */
-        height: 80vh;      /* Increased from 60vh */
-        padding: 24px 16px 90px;
+        right: max(-500px, calc(50% - 600px - 415px)); /* Position relative to .card on larger screens when hidden */
+        transition: right 1.1s cubic-bezier(.2,0,.2,1), opacity 1.1s;
+    }
+
+    body.card-flipped .details-panel {
+        right: max(0px, calc(50% - 600px - 415px)); /* Position relative to .card on larger screens when visible */
     }
 }
 
@@ -125,48 +202,46 @@ body::after {
     align-items: center;
     min-height: 70vh;
     position: relative;
+    perspective: 1000px; /* Added for 3D effect */
 }
 
 /* Envelope Styles */
 .envelope {
-    width: 450px;
-    height: 300px;
+    width: 800px; /* Increased width */
+    height: 600px; /* Increased height */
     position: relative;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: transform 1s ease-in-out; /* Smooth 3D rotation */
+    transform-style: preserve-3d; /* Enable 3D transformations for children */
 }
 
 .envelope:hover {
     transform: scale(1.05);
 }
 
-.envelope-front {
+.envelope-front,
+.envelope-inside {
+    position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #d1d3c7 0%, #b8baaf 100%);
-    border: 3px solid #dee2e6;
+    backface-visibility: hidden; /* Hide the back of the element when facing away */
     border-radius: 10px;
-    position: relative;
-    z-index: 2;
+    transition: opacity 0.5s ease; /* Fade effect for content */
+}
+
+.envelope-front {
+    background: #618676; /* Dark green background */
+    border: 3px solid #dee2e6;
+    z-index: 2; /* Ensure front is on top initially */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    transition: all 0.5s ease;
 }
 
-.envelope-front::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-    border-radius: 8px;
-    pointer-events: none;
-}
+/* Remove original ::before content as it's no longer needed */
+.envelope-front::before[style*="content: none;"] { content: none !important; }
 
 .envelope-back {
     position: absolute;
@@ -180,35 +255,43 @@ body::after {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+/* Content inside the envelope front */
 .envelope-seal {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #ac8f92, #b48e92);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-    animation: pulse 2s infinite;
+    width: 120px; /* Increased size */
+    height: 120px; /* Increased size */
+    background: linear-gradient(135deg, #ac8f92, #b48e92); /* Restore original background */
+    border-radius: 50%; /* Restore original border-radius */
+    display: flex; /* Restore original display */
+    align-items: center; /* Restore original align-items */
+    justify-content: center; /* Restore original justify-content */
+    margin-bottom: 30px; /* Adjusted margin */
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); /* Restore original box-shadow */
+    animation: pulse 2s infinite; /* Restore original animation */
+    position: relative; /* Restore original position */
+    z-index: 4; /* Restore original z-index */
 }
 
 .envelope-seal i {
-    color: white;
-    font-size: 2rem;
+    color: white; /* Restore original color */
+    font-size: 3rem; /* Increased icon size */
+}
+
+.envelope-text {
+    position: relative; /* Restore original position */
+    z-index: 4; /* Restore original z-index */
 }
 
 .envelope-text h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 2.5rem; /* Increased font size */
+    color: #c4aeae;
+    margin-bottom: 15px; /* Adjusted margin */
     text-align: center;
 }
 
 .envelope-text p {
-    color: #666;
-    font-size: 1rem;
+    color: #c4aeae;
+    font-size: 1.2rem; /* Increased font size */
     text-align: center;
     margin: 0;
 }
@@ -225,90 +308,102 @@ body::after {
     }
 }
 
-/* Card Container */
-.card-container {
+/* Envelope inside (back face) styles */
+.envelope-inside {
+    background: #fdfae6; /* Light background for floral pattern */
+    border: 3px solid #dee2e6;
+    z-index: 1; /* Below the front initially */
+    transform: rotateY(180deg); /* Start rotated to be the back face */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 70vh;
-    perspective: 1000px;
+    overflow: hidden; /* Ensure image fits */
+}
+
+.envelope-inside img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the entire area */
+    filter: brightness(1.1); /* Slightly brighten the image */
+}
+
+/* Envelope rotation state */
+.envelope.rotated {
+    transform: rotateY(180deg); /* Rotate the entire envelope */
+}
+
+/* Adjust z-index during rotation for smooth transition */
+.envelope.rotated .envelope-front {
+    z-index: 1; /* Move behind when rotated */
+}
+
+.envelope.rotated .envelope-inside {
+    z-index: 2; /* Bring to front when rotated */
+}
+
+/* New envelope flap styles */
+.envelope-flap {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.8s ease;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%; /* Covers the top half of the envelope */
+    background: linear-gradient(135deg, #d1d3c7 0%, #b8baaf 100%);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform-origin: bottom; /* Rotate from the bottom edge */
+    transition: transform 0.8s ease-in-out, background 0.5s ease; /* Smooth flap opening */
+    z-index: 3; /* Above the envelope-front */
+    border-bottom: 3px solid #dee2e6; /* Line at the fold */
 }
 
-/* Flip Button */
-.flip-button {
+.envelope-flap::before {
+    content: '';
     position: absolute;
-    top:-5%;
-    left: -600px;
-    width: 130px;
-    height: 80px;
-    background: linear-gradient(135deg, #74a874 0%, #a0c296 100%);
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flip-button:hover {
-    background: linear-gradient(135deg, #80b66a 0%, #7de286 100%);
-    box-shadow: 0 6px 20px rgba(101, 216, 120, 0.4);
-}
-
-.flip-button:active {
-    transform: scale(0.95) rotate();
-}
-
-.flip-button i {
-    transition: transform 0.3s ease;
-}
-
-.card-container.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Envelope Opening Animation */
-.envelope.opening .envelope-front {
-    transform: translateY(-150px) rotateX(180deg);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, transparent 50%, rgba(0,0,0,0.1) 50%); /* Subtle shading */
     opacity: 0.3;
 }
 
-.envelope.opening .envelope-back {
-    transform: translateY(50px);
+.envelope.opening .envelope-flap {
+    transform: rotateX(180deg); /* Open the flap */
+    z-index: 0; /* Move below the card when open */
 }
 
-/* Card Slide Out Animation */
-.card-container.slide-out {
-    animation: slideOutFromEnvelope 1s ease-out forwards;
+/* Card Container - position relative to envelope */
+.card-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateZ(10px); /* Slightly in front of the envelope */
+    transition: all 0.8s ease-out;
+    z-index: 3; /* Above the envelope */
+    opacity: 0;
+    visibility: hidden;
 }
 
-@keyframes slideOutFromEnvelope {
+/* Card becomes visible and slides out */
+.card-container.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) translateZ(10px) translateY(-50px); /* Slide up */
+}
+
+/* Card Slide Out Animation - adjust keyframes for new effect */
+/* No longer needed, as transform on .card-container.visible handles it */
+/* @keyframes slideOutFromEnvelope {
     0% {
-        transform: translate(-50%, -50%) translateY(100px) scale(0.8);
+        transform: translate(-50%, -50%) translateY(50px) scale(0.8);
         opacity: 0;
-    }
-    50% {
-        transform: translate(-50%, -50%) translateY(20px) scale(0.9);
-        opacity: 0.7;
     }
     100% {
         transform: translate(-50%, -50%) translateY(0) scale(1);
         opacity: 1;
     }
-}
+} */
 
 /* Card Styles */
 .card {
@@ -363,39 +458,26 @@ body::after {
     inset: 0;
     border-radius: 20px;
     pointer-events: none;
-    background-color: #263533;
-    /* floral frame and inner panel inspired by provided image */
-    background-image:
-        /* top floral */
-        radial-gradient(ellipse 220px 140px at 50% -20%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
-        /* bottom floral */
-        radial-gradient(ellipse 220px 140px at 50% 120%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
-        /* left floral */
-        radial-gradient(ellipse 120px 300px at -10% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
-        /* right floral */
-        radial-gradient(ellipse 120px 300px at 110% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
-        /* inner panel */
-        linear-gradient(#263533, #263533);
+    background-color: transparent; /* Remove background color */
+    background-image: none; /* Remove background gradients */
     background-repeat: no-repeat;
-    background-size:
-        90% 40%,
-        90% 40%,
-        35% 100%,
-        35% 100%,
-        86% 86%;
-    background-position:
-        50% 0%,
-        50% 100%,
-        0% 50%,
-        100% 50%,
-        50% 50%;
-    box-shadow: inset 0 0 0 2px rgba(216, 202, 170, 0.6), inset 0 0 0 14px rgba(38, 53, 51, 1);
+    background-size: cover;
+    background-position: center;
+    box-shadow: none; /* Remove box shadow */
 }
 
 /* Hide RSVP when design template is visible (when flipped) */
 .card.flipped .card-back .card-content { display: none; }
 .card.flipped .card-back .design-template { opacity: 1; }
 .card-back .design-template { opacity: 0; transition: opacity .4s ease; }
+
+/* Ensure the image within design-template covers the area */
+.design-template .card-back-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
 
 /* Typography and layout for designed back */
 .design-content {
@@ -810,6 +892,11 @@ body::after {
     color: #333;
 }
 
+.responses-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .response-item {
     padding: 15px;
     background: #f8f9fa;
@@ -833,144 +920,260 @@ body::after {
     color: #666;
 }
 
-/* Admin Toggle Button */
-.admin-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
-    z-index: 999;
-}
-
-.admin-toggle:hover {
-    background: #5a6fd8;
-    transform: scale(1.1);
-}
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
+@media (max-width: 1024px) {
+    .envelope-container {
+        min-height: 60vh;
     }
-    
-    .logo h1 {
-        font-size: 2.5rem;
-    }
-    
+
     .envelope {
-        width: 350px;
-        height: 250px;
+        width: 700px; /* Adjusted width for 1024px breakpoint */
+        height: 500px; /* Adjusted height for 1024px breakpoint */
     }
-    
-    .envelope-seal {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .envelope-seal i {
-        font-size: 1.5rem;
-    }
-    
-    .envelope-text h3 {
-        font-size: 1.5rem;
-    }
-    
-    .envelope-text p {
-        font-size: 0.9rem;
-    }
-    
+
     .card {
-        width: 500px;
-        height: 650px;
+        width: 480px; /* Adjusted for better fit */
+        height: 650px; /* Adjusted for better fit */
     }
-    
+
+    .card-container {
+        transform: translate(-50%, -50%) translateY(40px) scale(0.7); /* Smaller initial scale */
+    }
+
     .flip-button {
-        top: -50px;
-        left: -50px;
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        bottom: -90px;
     }
-    
+}
+
+@media (max-width: 768px) {
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .logo h1 {
+        font-size: 2.2rem;
+    }
+
+    .logo p {
+        font-size: 1rem;
+    }
+
+    .envelope-container {
+        min-height: 50vh;
+    }
+
+    .envelope {
+        width: 380px; /* Adjusted width for 768px breakpoint */
+        height: 260px; /* Adjusted height for 768px breakpoint */
+    }
+
+    .envelope-seal {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+
+    .envelope-seal i {
+        font-size: 1.2rem;
+    }
+
+    .envelope-text h3 {
+        font-size: 1.4rem;
+    }
+
+    .envelope-text p {
+        font-size: 0.8rem;
+    }
+
+    .card {
+        width: 280px;
+        height: 480px;
+    }
+
+    .flip-button {
+        width: 100px;
+        height: 60px;
+        font-size: 1rem;
+        bottom: -70px;
+    }
+
     .card-content {
-        padding: 30px 20px;
+        padding: 20px 15px;
     }
-    
+
     .event-title {
+        font-size: 1.3rem;
+    }
+
+    .detail-row {
+        max-width: 250px;
+    }
+
+    .rsvp-section h3 {
         font-size: 1.5rem;
     }
-    
-    .radio-group {
-        flex-direction: column;
-        gap: 10px;
+
+    .form-group {
+        max-width: 280px;
     }
-    
+
     .calendar-buttons {
         flex-direction: column;
+        gap: 8px;
     }
-    
-    .admin-panel {
-        width: 100%;
-        right: -100%;
+
+    .calendar-btn {
+        width: 80%;
+        margin: 0 auto;
     }
-    
-    .admin-stats {
-        grid-template-columns: 1fr;
+
+    .design-template {
+        /* Adjust radial gradients for smaller screens */
+        background-image:
+            radial-gradient(ellipse 180px 100px at 50% -20%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 180px 100px at 50% 120%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 80px 200px at -10% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 80px 200px at 110% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
+            linear-gradient(#263533, #263533);
+    }
+
+    .names .name {
+        font-size: 44px;
+    }
+
+    .names .amp {
+        font-size: 24px;
     }
 }
 
 @media (max-width: 480px) {
-    .envelope {
-        width: 300px;
-        height: 200px;
-    }
-    
-    .envelope-seal {
-        width: 50px;
-        height: 50px;
+    .header {
         margin-bottom: 15px;
     }
-    
-    .envelope-seal i {
-        font-size: 1.2rem;
+
+    .logo h1 {
+        font-size: 1.8rem;
     }
-    
-    .envelope-text h3 {
-        font-size: 1.3rem;
+
+    .logo p {
+        font-size: 0.9rem;
     }
-    
-    .envelope-text p {
-        font-size: 0.8rem;
+
+    .envelope {
+        width: 320px; /* Adjusted width for 480px breakpoint */
+        height: 220px; /* Adjusted height for 480px breakpoint */
     }
-    
-    .card {
-        width: 350px;
-        height: 500px;
-    }
-    
-    .flip-button {
-        top: -40px;
-        left: -40px;
+
+    .envelope-seal {
         width: 40px;
         height: 40px;
+        margin-bottom: 8px;
+    }
+
+    .envelope-seal i {
         font-size: 1rem;
     }
-    
-    .card-content {
-        padding: 20px 15px;
+
+    .envelope-text h3 {
+        font-size: 1.1rem;
     }
-    
-    .logo h1 {
-        font-size: 2rem;
+
+    .envelope-text p {
+        font-size: 0.7rem;
+    }
+
+    .card {
+        width: 220px;
+        height: 380px;
+    }
+
+    .card-container {
+        transform: translate(-50%, -50%) translateY(20px) scale(0.5); /* Smallest initial scale */
+    }
+
+    .flip-button {
+        width: 70px;
+        height: 45px;
+        font-size: 0.75rem;
+        bottom: -55px;
+    }
+
+    .card-content {
+        padding: 15px 10px;
+    }
+
+    .event-title {
+        font-size: 1.1rem;
+    }
+
+    .detail-row {
+        max-width: 220px;
+    }
+
+    .rsvp-section h3 {
+        font-size: 1.3rem;
+    }
+
+    .form-group {
+        max-width: 240px;
+    }
+
+    .design-template {
+        background-image:
+            radial-gradient(ellipse 150px 80px at 50% -20%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 150px 80px at 50% 120%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 60px 150px at -10% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
+            radial-gradient(ellipse 60px 150px at 110% 50%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.0) 70%),
+            linear-gradient(#263533, #263533);
+    }
+
+    .names .name {
+        font-size: 36px;
+    }
+
+    .names .amp {
+        font-size: 20px;
+    }
+}
+
+/* Adjustments for very small screens (e.g., small phones) */
+@media (max-width: 360px) {
+    .envelope {
+        width: 220px;
+        height: 150px;
+    }
+
+    .card {
+        width: 250px;
+        height: 420px;
+    }
+
+    .flip-button {
+        width: 70px;
+        height: 45px;
+        font-size: 0.75rem;
+        bottom: -55px;
+    }
+
+    .envelope-seal {
+        width: 35px;
+        height: 35px;
+    }
+
+    .envelope-seal i {
+        font-size: 0.9rem;
+    }
+
+    .envelope-text h3 {
+        font-size: 1rem;
+    }
+
+    .names .name {
+        font-size: 30px;
     }
 }
 
@@ -990,20 +1193,20 @@ body.card-flipped .details-panel {
 /* Desktop: details panel on right side, larger size */
 .details-panel {
     position: fixed;
-    top: 60px;
-    right: 0;
+    top: 0; /* Changed from 60px to 0 */
+    right: -500px; /* Start hidden off-screen */
     width: 500px;
-    height: calc(100vh - 60px);
+    height: 100vh; /* Changed from calc(100vh - 60px) to 100vh */
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(6px);
     border-left: 1px solid rgba(0,0,0,0.05);
     box-shadow: -2px 0 10px rgba(0,0,0,0.05);
-    padding: 12px 32px 110px; /* Reduced top padding */
+    padding: 12px 32px 110px;
     overflow-y: auto;
     z-index: 500;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s;
+    transition: right 0.5s ease-out, opacity 0.5s; /* Added transition for right property */
     display: block;
 }
 
@@ -1011,48 +1214,56 @@ body.card-flipped .details-panel {
 body.card-flipped .details-panel {
     opacity: 1;
     pointer-events: auto;
+    right: 0; /* Ensure it slides in from the right */
 }
 
-/* Tablet: reduce width */
+/* Adjust details panel for larger screens to cover the full screen */
+@media (min-width: 1400px) {
+    .details-panel {
+        right: -500px; /* Start hidden off-screen to the right, matching its width */
+        width: 500px; /* Set a fixed width for larger screens */
+        border-left: 1px solid rgba(0,0,0,0.05); /* Restore border */
+        box-shadow: -2px 0 10px rgba(0,0,0,0.05); /* Restore shadow */
+        transition: right 1.1s cubic-bezier(.2,0,.2,1), opacity 1.1s;
+    }
+
+    body.card-flipped .details-panel {
+        right: 0; /* Slide in */
+    }
+}
+
+/* Tablet and Mobile: Make it full screen */
 @media (max-width: 1024px) {
     .details-panel {
-        top: auto;
+        top: 0;
         bottom: 0;
         left: 0;
-        right: 0;
+        right: -100vw; /* Start off-screen to the right */
         width: 100vw;
-        height: 70vh;
-        max-height: 500px;
+        height: 100vh; /* Make it cover the full viewport height */
+        max-height: none; /* Remove max-height constraint */
         border-left: none;
-        border-top: 1px solid rgba(0,0,0,0.08);
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        border-top: none; /* Remove top border for full screen coverage */
+        box-shadow: none; /* Remove box shadow for full screen coverage */
         padding: 24px 16px 80px;
         background: rgba(255,255,255,0.95);
         backdrop-filter: blur(4px);
         overflow-y: auto;
         z-index: 500;
         display: block;
+        transform: translateX(0); /* Remove transform here as right property handles positioning */
+        transition: right 0.5s ease-out, opacity 0.5s; /* Animate right property */
     }
-}
 
-/* Mobile: further reduce height and padding */
-@media (max-width: 600px) {
-    .details-panel {
-        height: 60vh;
-        max-height: 350px;
-        padding: 12px 6px 60px;
-        font-size: 0.95rem;
+    body.card-flipped .details-panel {
+        right: 0; /* Slide in */
+        transform: translateX(0); /* Ensure no conflicting transform */
     }
-    .details-header {
-        font-size: 1.1rem;
-    }
-    .details-section {
-        padding: 10px;
-    }
-    .details-panel .card {
-        max-width: 98vw;
-        min-height: 180px;
-        font-size: 1rem;
+
+    .details-close {
+        top: 20px;
+        right: 20px;
+        font-size: 1.8rem;
     }
 }
 

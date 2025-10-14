@@ -23,22 +23,24 @@
         <div class="envelope-container" id="envelopeContainer">
             <div class="envelope" id="envelope">
                 <div class="envelope-front">
-                    <div class="envelope-seal">
-                        <i class="fas fa-heart"></i>
+                    <div class="envelope-image">
+                        <img src="./Images/firstCard.png" alt="First Card">
                     </div>
-                    <div class="envelope-text">
-                        <h3>You're Invited</h3>
-                        <p>Click to open</p>
+                    
+                </div>
+                <div class="envelope-inside" id="envelopeInside">
+                    <div class="envelope-back">
+                        <img src="/Images/closed card.png" alt="close img">
                     </div>
                 </div>
-                <div class="envelope-back"></div>
             </div>
-
             <!-- Invitation Card Container -->
             <div class="card-container" id="cardContainer">
-                <!-- Flip Button --><button class="flip-button" id="flipButton" onclick="flipCard()">
+                <!-- Flip Button -->   
+            <button class="flip-button" id="flipButton" onclick="flipCard()">
                     <i class="fas fa-sync-alt"></i> Flip Card
                 </button>
+                
                
                 
                 <div class="card" id="invitationCard">
@@ -155,24 +157,32 @@
 
         <!-- Right-side Details Panel -->
         <aside class="details-panel" id="detailsPanel">
-            <button class="details-close" id="detailsCloseBtn" aria-label="Close details">
-                <i class="fas fa-times"></i>
-            </button>
             <div class="details-header">DETAILS</div>
+            <hr class="details-separator">
+            <button class="details-close" id="detailsCloseButton"><i class="fas fa-times"></i></button>
+
             <div class="details-section">
                 <div class="details-subtitle">LOCATION</div>
-                <div class="details-title" id="detailsLocation">The Grand Ballroom</div>
-                <div class="details-address" id="detailsAddress">123 Downtown Plaza, Your City</div>
-                <div class="details-datetime" id="detailsDateTime">Saturday, December 14, 2024 • 7:00 PM</div>
+                <div class="details-title">Newell Pioneer Village</div>
+                <div class="details-address">
+                    8089 Champoeg Rd NE, St Paul, Oregon 97137<br>
+                    Saturday, September 13, 2025
+                </div>
                 <div class="details-actions">
-                    <button class="details-link" id="detailsViewMap"><i class="fas fa-map-marker-alt"></i> View Map</button>
-                    <button class="details-link" id="detailsAddCalendar"><i class="far fa-calendar-plus"></i> Add to calendar</button>
+                    <button class="details-link"><i class="fas fa-map-marker-alt"></i> View Map</button>
+                    <button class="details-link"><i class="fas fa-calendar-alt"></i> Add to calendar</button>
                 </div>
             </div>
-            <hr class="details-separator" />
-            <a class="details-rsvp" href="#cardContainer">View website & RSVP here</a>
 
-            <button class="send-message" id="sendMessageBtn">SEND MESSAGE</button>
+            <hr class="details-separator">
+
+            <div class="details-section" style="text-align:center;">
+                <a href="#" class="details-link">View website & RSVP</a>
+            </div>
+
+            <hr class="details-separator">
+
+            <button class="send-message">SEND MESSAGE</button>
         </aside>
 
         <!-- Success Message -->
@@ -210,14 +220,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toggle Admin Panel Button -->
-        <button class="admin-toggle" id="adminToggle" onclick="toggleAdminPanel()">
-            <i class="fas fa-cog"></i>
-            Host View
-        </button>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>

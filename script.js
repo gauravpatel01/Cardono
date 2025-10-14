@@ -48,6 +48,12 @@ function initializeApp() {
         });
     }
     
+    // Details close button
+    const detailsCloseButton = document.getElementById('detailsCloseButton');
+    if (detailsCloseButton) {
+        detailsCloseButton.addEventListener('click', closeDetailsPanel);
+    }
+    
     // Load saved responses from localStorage
     loadResponses();
 }
@@ -57,16 +63,31 @@ function openEnvelope() {
     
     isEnvelopeOpened = true;
     const envelope = document.getElementById('envelope');
+    // const envelopeFlap = document.getElementById('envelopeFlap'); // No longer needed
+    const envelopeInside = document.getElementById('envelopeInside');
     const cardContainer = document.getElementById('cardContainer');
+    const envelopeText = envelope.querySelector('.envelope-text');
+    const envelopeSeal = envelope.querySelector('.envelope-seal');
     
-    // Add opening animation to envelope
-    envelope.classList.add('opening');
+    // Add rotation animation to envelope
+    envelope.classList.add('rotated');
     
-    // Show card container with slide-out animation after envelope opens
+    // Hide text and seal (if they were visible, though CSS now handles initial state)
+    if (envelopeText) envelopeText.style.opacity = '0'; // Ensure it fades out if visible
+    if (envelopeSeal) envelopeSeal.style.opacity = '0'; // Ensure it fades out if visible
+    
+    // After the envelope has rotated, make the card visible and slide out
     setTimeout(() => {
-        cardContainer.classList.add('show', 'slide-out');
-        envelope.style.opacity = '0';
-    }, 800);
+        cardContainer.classList.add('visible'); // Make card visible
+        // No 'slide-out' class needed if transform handles it directly now
+        
+        // Optionally hide the entire envelope if no longer needed
+        envelope.style.display = 'none'; // Hide the envelope entirely after card slides out
+    }, 1000); // This delay should match the envelope rotation transition duration (1s in CSS)
+}
+
+function closeDetailsPanel() {
+    document.body.classList.remove('card-flipped');
 }
 
 function flipCard() {
@@ -311,11 +332,6 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// Close details panel
-document.getElementById('detailsCloseBtn').addEventListener('click', function() {
-    document.body.classList.remove('card-flipped');
-});
-
 // Add some sample data for demonstration
 function addSampleData() {
     const sampleResponses = [
@@ -356,10 +372,6 @@ function addSampleData() {
 
 // Uncomment the line below to add sample data for demonstration
 // addSampleData();
-
-document.getElementById('invitationCard').addEventListener('click', function() {
-    document.getElementById('flipButton').style.display = 'flex';
-});
 
 document.getElementById('envelopeFront').addEventListener('click', function() {
     document.getElementById('envelopeFront').style.display = 'none'; // Hide first page
