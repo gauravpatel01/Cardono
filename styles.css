@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -39,7 +39,7 @@ html, body { height: 100%; }
     left: 50%;
 }
 
-.replay-btn {
+.view-details-btn {
     position: absolute;
     bottom: 32px; 
     left: 50%;
@@ -55,20 +55,23 @@ html, body { height: 100%; }
     gap: 8px;
     align-items: center;
     box-shadow: 0 6px 18px rgba(0,0,0,.25);
-    display: none; /* only visible after animation */
-    z-index: 6; 
+    display: none; 
+    z-index: 50; 
 }
 
-.replay-btn:hover { filter: brightness(1.1); }
+.view-details-btn:hover { filter: brightness(1.1); }
 
-/* Mobile view */
+
+.hero-overlay { pointer-events: none; }
+
+
 @media (max-width: 1024px) {
     .hero-anim { width: 96vw; }
 }
 
 @media (max-width: 768px) {
     .hero-anim { width: 100vw; margin-bottom: 16px; }
-    .replay-btn { bottom: 14px; padding: 9px 12px; font-size: 13px; }
+    .view-details-btn { bottom: 14px; padding: 9px 12px; font-size: 13px; }
 }
 
 @media (max-width: 480px) {
@@ -87,7 +90,7 @@ html, body { height: 100%; }
     }
 
     .header { margin-bottom: 12px; }
-    .replay-btn { padding: 8px 10px; font-size: 12px; }
+    .view-details-btn { padding: 8px 10px; font-size: 12px; }
 }
 
 
@@ -98,6 +101,7 @@ html, body { height: 100%; }
         display: grid;
         place-items: center; 
     }
+    .view-details-btn { bottom: 100px; }
 }
 
 body::before {
@@ -115,7 +119,7 @@ body::after {
     position: relative;
 }
 
-/* Responsive adjustments for overall layout */
+
 @media (max-width: 1200px) {
     .container {
         padding: 15px;
@@ -128,11 +132,11 @@ body::after {
     }
 }
 
-/* Right-side Details Panel */
+
 .details-panel {
     position: fixed;
     top: 0;
-    right: -415px; /* Start hidden off-screen */
+    right: -415px; 
     width: 415px;
     height: 100vh;
     background: rgba(255,255,255,0.85);
@@ -159,7 +163,7 @@ body::after {
     font-size: large;
     border-radius: 10px; 
     padding: 28px;
-    margin-top: 0; /* Remove any top margin */ 
+    margin-top: 0; 
     }
 .details-subtitle {
     color: #6c7a70; 
@@ -242,13 +246,13 @@ body::after {
     color: #c0392b;
 }
 
-/* Adjustments for the close button positioning */
+
 body.card-flipped .details-panel .details-close {
     top: 25px;
     right: 25px;
 }
 
-/* Adjust details panel for larger screens, ensuring it does not overlap crucial content */
+
 @media (min-width: 1400px) {
     .details-panel {
         right: max(-500px, calc(50% - 600px - 415px)); /* Position relative to .card on larger screens when hidden */
@@ -293,12 +297,12 @@ body.card-flipped .details-panel .details-close {
 
 /* Envelope Styles */
 .envelope {
-    width: 800px; /* Increased width */
-    height: 600px; /* Increased height */
+    width: 800px; 
+    height: 600px; 
     position: relative;
     cursor: pointer;
-    transition: transform 1s ease-in-out; /* Smooth 3D rotation */
-    transform-style: preserve-3d; /* Enable 3D transformations for children */
+    transition: transform 1s ease-in-out; 
+    transform-style: preserve-3d; 
 }
 
 .envelope:hover {
@@ -310,15 +314,15 @@ body.card-flipped .details-panel .details-close {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Hide the back of the element when facing away */
+    backface-visibility: hidden; 
     border-radius: 10px;
-    transition: opacity 0.5s ease; /* Fade effect for content */
+    transition: opacity 0.5s ease; 
 }
 
 .envelope-front {
-    background: #618676; /* Dark green background */
+    background: #618676; 
     border: 3px solid #dee2e6;
-    z-index: 2; /* Ensure front is on top initially */
+    z-index: 2; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -326,7 +330,7 @@ body.card-flipped .details-panel .details-close {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Remove original ::before content as it's no longer needed */
+
 .envelope-front::before[style*="content: none;"] { content: none !important; }
 
 .envelope-back {
@@ -341,20 +345,20 @@ body.card-flipped .details-panel .details-close {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Content inside the envelope front */
+
 .envelope-seal {
-    width: 120px; /* Increased size */
-    height: 120px; /* Increased size */
-    background: linear-gradient(135deg, #ac8f92, #b48e92); /* Restore original background */
-    border-radius: 50%; /* Restore original border-radius */
-    display: flex; /* Restore original display */
-    align-items: center; /* Restore original align-items */
-    justify-content: center; /* Restore original justify-content */
-    margin-bottom: 30px; /* Adjusted margin */
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); /* Restore original box-shadow */
-    animation: pulse 2s infinite; /* Restore original animation */
-    position: relative; /* Restore original position */
-    z-index: 4; /* Restore original z-index */
+    width: 120px; 
+    height: 120px; 
+    background: linear-gradient(135deg, #ac8f92, #b48e92); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 30px; 
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); 
+    animation: pulse 2s infinite; 
+    position: relative; 
+    z-index: 4; 
 }
 
 .envelope-seal i {

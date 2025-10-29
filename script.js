@@ -69,13 +69,26 @@ function initHeroAnimation() {
     const frameGift = document.getElementById('frameGift');
     const frameClosed = document.getElementById('frameClosed');
     const frameOpen = document.getElementById('frameOpen');
+    
     const framePeek = document.getElementById('framePeek');
     const frameFull = document.getElementById('frameFull');
-    const replayBtn = document.getElementById('replayAnim');
+    const viewDetailsBtn = document.getElementById('viewDetailsBtn');
+
+    // Layering: back envelope, peeking card above it, then full card on very top
+    gsap.set(frameGift, { zIndex: 2 });
+    gsap.set(frameClosed, { zIndex: 3 });
+    gsap.set(frameOpen, { zIndex: 4 });
+    gsap.set(framePeek, { zIndex: 8 });
+    gsap.set(frameFull, { zIndex: 12 });
 
     scene.setAttribute('role', 'button');
     scene.setAttribute('tabindex', '0');
     scene.setAttribute('aria-label', 'Play invitation animation. Click to advance.');
+
+    // Desktop centering offset so final card sits in middle vertically
+    const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
+    const finalCardScale = isDesktop ? 0.85 : 1;
+    const centerYOffset = isDesktop ? -80 : 0;
 
     gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], {
         autoAlpha: 0,
@@ -83,19 +96,19 @@ function initHeroAnimation() {
         xPercent: -50,
         yPercent: -50,
         x: 0,
-        y: 0
+        y: centerYOffset
     });
     gsap.set(frameGift, { autoAlpha: 1 });
     gsap.set(frameFull, { transformOrigin: 'center bottom' });
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: () => {
-        if (replayBtn) gsap.to(replayBtn, { autoAlpha: 1, display: 'flex', duration: 0.25 });
+        if (viewDetailsBtn) gsap.to(viewDetailsBtn, { autoAlpha: 1, display: 'flex', duration: 0.25 });
     }});
 
     // 1)
-    tl.from(frameGift, { y: 20, duration: 0.6 });
-    tl.to(frameGift, { y: 0, duration: 0.4 });
-    tl.addPause('+=0.2'); // hold for viewer
+    tl.from(frameGift, { y: centerYOffset + 20, duration: 0.6 });
+    tl.to(frameGift, { y: centerYOffset, duration: 0.4 });
+    tl.addPause('+=0.2'); 
 
     // 2)
     tl.to(frameGift, { autoAlpha: 0, duration: 0.25 }, 'closedSwitch');
@@ -107,39 +120,39 @@ function initHeroAnimation() {
     tl.fromTo(frameOpen, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 }, 'openSwap');
     tl.addPause('+=0.2');
 
-    // 4) Card peeks and rises
-    // Move the peeking card straight upwards while staying centered
-    tl.fromTo(framePeek, { autoAlpha: 0, y: 0 }, { autoAlpha: 1, y: -60, duration: 0.4, ease: 'power2.out' });
-    tl.to(framePeek, { y: -140, duration: 0.9, ease: 'power2.inOut' });
+    
+    gsap.set(framePeek, { scale: 0.52, y: 130 + centerYOffset });
+    tl.fromTo(
+        framePeek,
+        { autoAlpha: 0, y: 130 + centerYOffset, scale: 0.52 },
+        { autoAlpha: 1, y: 0 + centerYOffset, scale: 0.56, duration: 0.55, ease: 'power2.out' }
+    );
+    tl.to(framePeek, { y: -90 + centerYOffset, duration: 0.9, ease: 'power2.inOut' });
     tl.addPause('+=0.1');
 
     // 5) Reveal full card
     tl.to([frameOpen, framePeek], { autoAlpha: 0, duration: 0.25 }, 'revealFull');
-    tl.fromTo(frameFull, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 0.8 }, 'revealFull+=0.05');
-    tl.to(frameFull, { y: -8, duration: 1.6, ease: 'sine.inOut' })
-      .to(frameFull, { y: 0, duration: 1.6, ease: 'sine.inOut' });
+    tl.fromTo(
+        frameFull,
+        { autoAlpha: 0, scale: 0.9, y: centerYOffset },
+        { autoAlpha: 1, scale: finalCardScale, y: centerYOffset, duration: 0.7 },
+        'revealFull+=0.05'
+    );
+    tl.to(frameFull, { y: centerYOffset - 8, duration: 1.6, ease: 'sine.inOut' })
+      .to(frameFull, { y: centerYOffset, duration: 1.6, ease: 'sine.inOut' });
 
-    // Replay resets to initial state
-    function resetAnim() {
-        if (replayBtn) gsap.set(replayBtn, { autoAlpha: 0, display: 'none' });
-        tl.pause(0).clear();
-        gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], { clearProps: 'all' });
-        gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], {
-            autoAlpha: 0,
-            scale: 1,
-            x: 0,
-            y: 0
-        });
-        gsap.set(frameGift, { autoAlpha: 1 });
-
-        initHeroAnimation();
-    }
-
-    if (replayBtn) gsap.set(replayBtn, { autoAlpha: 0, display: 'none' });
+    if (viewDetailsBtn) gsap.set(viewDetailsBtn, { autoAlpha: 0, display: 'none' });
 
     scene.addEventListener('click', () => tl.play()); // play from pauses
     scene.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tl.play(); } });
-    replayBtn.addEventListener('click', (e) => { e.stopPropagation(); resetAnim(); });
+    if (viewDetailsBtn) {
+        viewDetailsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const card = document.getElementById('invitationCard');
+            if (!card.classList.contains('flipped')) card.classList.add('flipped');
+            document.body.classList.add('card-flipped');
+        });
+    }
 }
 
 function openEnvelope() {
@@ -147,27 +160,23 @@ function openEnvelope() {
     
     isEnvelopeOpened = true;
     const envelope = document.getElementById('envelope');
-    // const envelopeFlap = document.getElementById('envelopeFlap'); // No longer needed
     const envelopeInside = document.getElementById('envelopeInside');
     const cardContainer = document.getElementById('cardContainer');
     const envelopeText = envelope.querySelector('.envelope-text');
     const envelopeSeal = envelope.querySelector('.envelope-seal');
     
-    // Add rotation animation to envelope
+    
     envelope.classList.add('rotated');
     
-    // Hide text and seal (if they were visible, though CSS now handles initial state)
-    if (envelopeText) envelopeText.style.opacity = '0'; // Ensure it fades out if visible
-    if (envelopeSeal) envelopeSeal.style.opacity = '0'; // Ensure it fades out if visible
+  
+    if (envelopeText) envelopeText.style.opacity = '0'; 
     
-    // After the envelope has rotated, make the card visible and slide out
+
     setTimeout(() => {
-        cardContainer.classList.add('visible'); // Make card visible
-        // No 'slide-out' class needed if transform handles it directly now
-        
-        // Optionally hide the entire envelope if no longer needed
-        envelope.style.display = 'none'; // Hide the envelope entirely after card slides out
-    }, 1000); // This delay should match the envelope rotation transition duration (1s in CSS)
+        cardContainer.classList.add('visible'); 
+    
+        envelope.style.display = 'none'; 
+    }, 1000); 
 }
 
 function closeDetailsPanel() {
@@ -187,7 +196,7 @@ function flipCard() {
 function handleRSVPSubmit(e) {
     e.preventDefault();
     
-    // Get form data
+  
     const name = document.getElementById('guestName').value.trim();
     const email = document.getElementById('guestEmail').value.trim();
     const guestCount = document.getElementById('guestCount').value;
