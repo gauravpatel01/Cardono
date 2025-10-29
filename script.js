@@ -7,6 +7,7 @@ let isEnvelopeOpened = false;
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     loadResponses();
+    initHeroAnimation();
 });
 
 function initializeApp() {
@@ -56,6 +57,89 @@ function initializeApp() {
     
     // Load saved responses from localStorage
     loadResponses();
+}
+
+// GSAP animation
+function initHeroAnimation() {
+    if (typeof gsap === 'undefined') return;
+
+    const scene = document.getElementById('heroScene');
+    if (!scene) return;
+
+    const frameGift = document.getElementById('frameGift');
+    const frameClosed = document.getElementById('frameClosed');
+    const frameOpen = document.getElementById('frameOpen');
+    const framePeek = document.getElementById('framePeek');
+    const frameFull = document.getElementById('frameFull');
+    const replayBtn = document.getElementById('replayAnim');
+
+    scene.setAttribute('role', 'button');
+    scene.setAttribute('tabindex', '0');
+    scene.setAttribute('aria-label', 'Play invitation animation. Click to advance.');
+
+    gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], {
+        autoAlpha: 0,
+        scale: 1,
+        xPercent: -50,
+        yPercent: -50,
+        x: 0,
+        y: 0
+    });
+    gsap.set(frameGift, { autoAlpha: 1 });
+    gsap.set(frameFull, { transformOrigin: 'center bottom' });
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: () => {
+        if (replayBtn) gsap.to(replayBtn, { autoAlpha: 1, display: 'flex', duration: 0.25 });
+    }});
+
+    // 1)
+    tl.from(frameGift, { y: 20, duration: 0.6 });
+    tl.to(frameGift, { y: 0, duration: 0.4 });
+    tl.addPause('+=0.2'); // hold for viewer
+
+    // 2)
+    tl.to(frameGift, { autoAlpha: 0, duration: 0.25 }, 'closedSwitch');
+    tl.fromTo(frameClosed, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45 }, 'closedSwitch');
+    tl.addPause('+=0.25');
+
+    // 3) Open envelope
+    tl.to(frameClosed, { autoAlpha: 0, duration: 0.2 }, 'openSwap');
+    tl.fromTo(frameOpen, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 }, 'openSwap');
+    tl.addPause('+=0.2');
+
+    // 4) Card peeks and rises
+    // Move the peeking card straight upwards while staying centered
+    tl.fromTo(framePeek, { autoAlpha: 0, y: 0 }, { autoAlpha: 1, y: -60, duration: 0.4, ease: 'power2.out' });
+    tl.to(framePeek, { y: -140, duration: 0.9, ease: 'power2.inOut' });
+    tl.addPause('+=0.1');
+
+    // 5) Reveal full card
+    tl.to([frameOpen, framePeek], { autoAlpha: 0, duration: 0.25 }, 'revealFull');
+    tl.fromTo(frameFull, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 0.8 }, 'revealFull+=0.05');
+    tl.to(frameFull, { y: -8, duration: 1.6, ease: 'sine.inOut' })
+      .to(frameFull, { y: 0, duration: 1.6, ease: 'sine.inOut' });
+
+    // Replay resets to initial state
+    function resetAnim() {
+        if (replayBtn) gsap.set(replayBtn, { autoAlpha: 0, display: 'none' });
+        tl.pause(0).clear();
+        gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], { clearProps: 'all' });
+        gsap.set([frameGift, frameClosed, frameOpen, framePeek, frameFull], {
+            autoAlpha: 0,
+            scale: 1,
+            x: 0,
+            y: 0
+        });
+        gsap.set(frameGift, { autoAlpha: 1 });
+
+        initHeroAnimation();
+    }
+
+    if (replayBtn) gsap.set(replayBtn, { autoAlpha: 0, display: 'none' });
+
+    scene.addEventListener('click', () => tl.play()); // play from pauses
+    scene.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tl.play(); } });
+    replayBtn.addEventListener('click', (e) => { e.stopPropagation(); resetAnim(); });
 }
 
 function openEnvelope() {

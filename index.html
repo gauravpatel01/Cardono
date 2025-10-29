@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,8 +20,19 @@
             </div>
         </header>
 
-        <!-- Envelope Container -->
-        <div class="envelope-container" id="envelopeContainer">
+        <!-- Hero Animation Scene (GSAP) -->
+        <div class="hero-anim" id="heroScene" aria-label="Invitation animation">
+            <img id="frameGift" class="hero-layer" src="./Images/firstCard.png" alt="Gift box" style="opacity:1;">
+            <img id="frameClosed" class="hero-layer" src="./Images/closedCard.png" alt="Closed envelope">
+            <img id="frameOpen" class="hero-layer" src="./Images/open card.png" alt="Open envelope">
+            <img id="framePeek" class="hero-layer" src="./Images/card-content.png" alt="Card peeking" style="clip-path: inset(40% 0 35% 0 round 12px);">
+            <img id="frameFull" class="hero-layer" src="./Images/card-content.png" alt="Invitation card">
+
+            <button id="replayAnim" class="replay-btn" type="button"><i class="fas fa-rotate-left"></i> Replay</button>
+        </div>
+
+        <!-- Envelope Container  -->
+        <div class="envelope-container" id="envelopeContainer" style="display:none;">
             <div class="envelope" id="envelope">
                 <div class="envelope-front">
                     <div class="envelope-image">
@@ -30,7 +42,7 @@
                 </div>
                 <div class="envelope-inside" id="envelopeInside">
                     <div class="envelope-back">
-                        <img src="/Images/closed card.png" alt="close img">
+                        <img src="./Images/closedCard.png" alt="close img">
                     </div>
                 </div>
             </div>

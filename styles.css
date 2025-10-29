@@ -11,7 +11,93 @@ body {
     min-height: 100vh;
     color: #333;
     overflow-x: hidden;
+    overflow-y: hidden; 
     position: relative;
+}
+
+html, body { height: 100%; }
+
+.hero-anim {
+    position: relative;
+    width: 100%; 
+    aspect-ratio: 16/9;
+    margin: 0 auto 30px auto;
+    display: grid;
+    place-items: center;
+}
+
+.hero-layer {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    width: min(80vmin, 820px); 
+    height: auto;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,.25));
+    opacity: 0; 
+    transform-origin: center center;
+    top: 50%;
+    left: 50%;
+}
+
+.replay-btn {
+    position: absolute;
+    bottom: 32px; 
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: rgba(38,53,51,.9);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    display: none; /* only visible after animation */
+    z-index: 6; 
+}
+
+.replay-btn:hover { filter: brightness(1.1); }
+
+/* Mobile view */
+@media (max-width: 1024px) {
+    .hero-anim { width: 96vw; }
+}
+
+@media (max-width: 768px) {
+    .hero-anim { width: 100vw; margin-bottom: 16px; }
+    .replay-btn { bottom: 14px; padding: 9px 12px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+    .hero-anim {
+        width: 100vw;
+        height: 70vh;
+        aspect-ratio: auto; 
+        padding: 0 6vw;
+    }
+
+    .hero-layer {
+        width: 92vw;
+        height: auto;
+        max-height: 100%;
+        filter: drop-shadow(0 6px 14px rgba(0,0,0,.22));
+    }
+
+    .header { margin-bottom: 12px; }
+    .replay-btn { padding: 8px 10px; font-size: 12px; }
+}
+
+
+@media (min-width: 1025px) {
+    .hero-anim {
+        height: calc(100vh - 120px); 
+        aspect-ratio: auto;
+        display: grid;
+        place-items: center; 
+    }
 }
 
 body::before {
@@ -407,8 +493,8 @@ body.card-flipped .details-panel .details-close {
 
 /* Card Styles */
 .card {
-    width: 600px;
-    height: 800px;
+    width: 680px; 
+    height: 920px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -933,8 +1019,8 @@ body.card-flipped .details-panel .details-close {
     }
 
     .card {
-        width: 480px; /* Adjusted for better fit */
-        height: 650px; /* Adjusted for better fit */
+        width: 560px; 
+        height: 800px;
     }
 
     .card-container {
@@ -990,8 +1076,8 @@ body.card-flipped .details-panel .details-close {
     }
 
     .card {
-        width: 280px;
-        height: 480px;
+        width: 330px;
+        height: 560px;
     }
 
     .flip-button {
@@ -1087,8 +1173,8 @@ body.card-flipped .details-panel .details-close {
     }
 
     .card {
-        width: 220px;
-        height: 380px;
+        width: 280px;
+        height: 470px;
     }
 
     .card-container {
@@ -1148,8 +1234,8 @@ body.card-flipped .details-panel .details-close {
     }
 
     .card {
-        width: 250px;
-        height: 420px;
+        width: 240px;
+        height: 400px;
     }
 
     .flip-button {
